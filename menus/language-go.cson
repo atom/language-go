@@ -1,0 +1,11 @@
+'menu': [
+    {
+        'label': 'Packages'
+        'submenu': [
+            'label': 'Go'
+            'submenu': [
+                {'label': 'Run gofmt', 'command': 'golang:gofmt'}
+            ]
+        ]
+    }
+]
