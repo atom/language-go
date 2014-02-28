@@ -15,10 +15,14 @@ class Gofmt
   handleBufferEvents: (editor) ->
     buffer = editor.getBuffer()
     @subscribe buffer, 'will-be-saved', =>
-      grammar = editor.getGrammar()
-      if grammar.scopeName is 'source.go' and atom.config.get('language-go.formatOnSave')
-        @formatBuffer(buffer)
+      @formatBuffer(buffer, editor)
 
-  formatBuffer: (buffer) ->
-    gofmt = atom.config.get('language-go.gofmtPath')
-    fmt = spawn(gofmt, ["-w=true", buffer.getPath()])
+  formatCurrentBuffer: ->
+    editor = atom.workspace.activePaneItem
+    @formatBuffer(editor.getBuffer(), editor)
+
+  formatBuffer: (buffer, editor) ->
+    grammar = editor.getGrammar()
+    if grammar.scopeName is 'source.go' and atom.config.get('language-go.formatOnSave')
+      gofmt = atom.config.get('language-go.gofmtPath')
+      fmt = spawn(gofmt, ["-w=true", buffer.getPath()])
