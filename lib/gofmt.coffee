@@ -16,12 +16,9 @@ class Gofmt
     buffer = editor.getBuffer()
     @subscribe buffer, 'will-be-saved', =>
       grammar = editor.getGrammar()
-      if grammar.scopeName is 'source.go'
-        @formatBuffer(buffer, editor)
+      if grammar.scopeName is 'source.go' and atom.config.get('language-go.formatOnSave')
+        @formatBuffer(buffer)
 
-  formatBuffer: (buffer, editor) ->
-    pos = editor.getCursorBufferPosition()
-
+  formatBuffer: (buffer) ->
     gofmt = atom.config.get('language-go.gofmtPath')
-    console.log(gofmt)
     fmt = spawn(gofmt, ["-w=true", buffer.getPath()])
