@@ -14,7 +14,7 @@ class Gofmt
 
   handleBufferEvents: (editor) ->
     buffer = editor.getBuffer()
-    @subscribe buffer, 'will-be-saved', =>
+    @subscribe buffer, 'saved', =>
       @formatBuffer(buffer, editor)
 
   formatCurrentBuffer: ->
