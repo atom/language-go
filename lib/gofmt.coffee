@@ -25,4 +25,7 @@ class Gofmt
     grammar = editor.getGrammar()
     if grammar.scopeName is 'source.go' and atom.config.get('language-go.formatOnSave')
       gofmt = atom.config.get('language-go.gofmtPath')
-      fmt = spawn(gofmt, ["-w=true", buffer.getPath()])
+      tabs = atom.config.get('language-go.indentWithTabs')
+      tabWidth = atom.config.get('language-go.tabWidth')
+      args = ["-w=true", "-tabs="+tabs, "-tabwidth="+tabWidth, buffer.getPath()]
+      fmt = spawn(gofmt, args)
