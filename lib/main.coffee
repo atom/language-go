@@ -3,7 +3,7 @@ Gofmt = require './gofmt'
 module.exports =
   configDefaults:
     formatOnSave: false
-    gofmtPath: "/usr/bin/gofmt"
+    gofmtPath: "gofmt"
     indentWithTabs: true
     tabWidth: 8
 
