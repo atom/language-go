@@ -4,6 +4,8 @@ module.exports =
   configDefaults:
     formatOnSave: false
     gofmtPath: "/usr/bin/gofmt"
+    indentWithTabs: true
+    tabWidth: 8
 
   activate: ->
     @gofmt = new Gofmt()
