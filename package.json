@@ -1,11 +1,11 @@
 {
   "name": "language-go",
-  "description": "Go language support in Atom",
   "version": "0.6.0",
+  "main": "./lib/main",
+  "description": "Go language support in Atom",
   "license": "MIT",
   "engines": {
-    "atom": "*",
-    "node": "*"
+    "atom": "*"
   },
   "homepage": "http://atom.github.io/language-go",
   "repository": {
@@ -14,5 +14,8 @@
   },
   "bugs": {
     "url": "https://github.com/atom/language-go/issues"
+  },
+  "dependencies": {
+    "emissary": "1.x"
   }
 }

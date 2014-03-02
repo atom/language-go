@@ -8,3 +8,18 @@
   'println(str)':
     'prefix': 'pl'
     'body': 'println($1);'
+  'func':
+    'prefix': 'func'
+    'body': "func $1($2) {\n$0\n}"
+  'main':
+    'prefix': 'main'
+    'body': "func main() {\n$1\n}"
+  'var':
+    'prefix': 'var'
+    'body': "var ${1:ok} ${2:bool}\n$0"
+  'switch':
+    'prefix': 'switch'
+    'body': "switch {\n    case ${1:cond}:\n        $0\n}"
+  'Import':
+    'prefix': 'Im'
+    'body': "import (\n    \"${1:fmt}\"\n)$0"
