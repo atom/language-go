@@ -4,8 +4,6 @@ module.exports =
   configDefaults:
     formatOnSave: true
     gofmtPath: "gofmt"
-    goimportsEnabled: false
-    goimportsPath: "goimports"
 
   activate: ->
     @gofmt = new Gofmt()

@@ -24,13 +24,9 @@ class Gofmt
   formatBuffer: (buffer, editor, saving) ->
     grammar = editor.getGrammar()
     if saving and not atom.config.get('language-go.formatOnSave')
-      return buffer
+      return
     if grammar.scopeName isnt 'source.go'
-      return buffer
+      return
     args = ["-w=true", buffer.getPath()]
-    fmtCmd = ''
-    if atom.config.get('language-go.goimportsEnabled')
-      fmtCmd = atom.config.get('language-go.goimportsPath')
-    else
-      fmtCmd = atom.config.get('language-go.gofmtPath')
+    fmtCmd = atom.config.get('language-go.gofmtPath')
     fmt = spawn(fmtCmd, args)
