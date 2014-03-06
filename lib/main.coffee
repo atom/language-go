@@ -6,8 +6,6 @@ module.exports =
     gofmtPath: "gofmt"
     goimportsEnabled: false
     goimportsPath: "goimports"
-    indentWithTabs: true
-    tabWidth: 8
 
   activate: ->
     @gofmt = new Gofmt()
