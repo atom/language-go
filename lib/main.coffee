@@ -2,8 +2,10 @@ Gofmt = require './gofmt'
 
 module.exports =
   configDefaults:
-    formatOnSave: false
+    formatOnSave: true
     gofmtPath: "gofmt"
+    goimportsEnabled: false
+    goimportsPath: "goimports"
     indentWithTabs: true
     tabWidth: 8
 
