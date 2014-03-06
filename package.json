@@ -5,7 +5,7 @@
   "main": "./lib/main",
   "license": "MIT",
   "engines": {
-    "atom": "*"
+    "atom": "*",
     "node": "*"
   },
   "homepage": "http://atom.github.io/language-go",
