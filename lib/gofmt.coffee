@@ -1,20 +1,15 @@
-{Subscriber} = require 'emissary'
 spawn = require('child_process').spawn
 
 module.exports =
 class Gofmt
-  Subscriber.includeInto(this)
 
   constructor: ->
     atom.workspace.eachEditor (editor) =>
       @handleBufferEvents(editor)
 
-  destroy: ->
-    @unsubscribe()
-
   handleBufferEvents: (editor) ->
     buffer = editor.getBuffer()
-    @subscribe buffer, 'saved', =>
+    buffer.on 'saved', =>
       @formatBuffer(buffer, editor, true)
 
   formatCurrentBuffer: ->

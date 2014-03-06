@@ -15,8 +15,5 @@
   },
   "bugs": {
     "url": "https://github.com/atom/language-go/issues"
-  },
-  "dependencies": {
-    "emissary": "1.x"
   }
 }
