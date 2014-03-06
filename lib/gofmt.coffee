@@ -20,6 +20,6 @@ class Gofmt
     grammar = editor.getGrammar()
     return if saving and not atom.config.get('language-go.formatOnSave')
     return if grammar.scopeName isnt 'source.go'
-    args = ["-w=true", buffer.getPath()]
+    args = ["-w", buffer.getPath()]
     fmtCmd = atom.config.get('language-go.gofmtPath')
     fmt = spawn(fmtCmd, args)
