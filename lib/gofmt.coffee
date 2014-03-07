@@ -23,3 +23,7 @@ class Gofmt
     args = ["-w", buffer.getPath()]
     fmtCmd = atom.config.get('language-go.gofmtPath')
     fmt = spawn(fmtCmd, args)
+    fmt.on 'error', (error) -> console.log fmtCmd + ' not found'
+    fmt.stderr.on 'data', (data) -> console.log 'error formatting file: ' + data
+    fmt.stdout.on 'data', (data) -> console.log 'formatting file: ' + data
+    fmt.on 'close', (code) -> console.log fmtCmd + ' exited with code: ' + code if code isnt 0
