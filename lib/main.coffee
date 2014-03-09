@@ -4,6 +4,7 @@ module.exports =
   configDefaults:
     formatOnSave: true
     gofmtPath: "gofmt"
+    showErrorPanel: true
 
   activate: ->
     @gofmt = new Gofmt()
