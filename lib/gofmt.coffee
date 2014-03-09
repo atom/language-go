@@ -25,10 +25,10 @@ class Gofmt
     args = ["-w", buffer.getPath()]
     fmtCmd = atom.config.get('language-go.gofmtPath')
     fmt = spawn(fmtCmd, args)
-    fmt.on 'error', (error) -> console.log fmtCmd + ' not found'
+    fmt.on 'error', (error) -> console.log 'language-go: error launching format command [' + fmtCmd + '] – ' + error  + ' – current PATH: [' + process.env.PATH + ']' if error?
     fmt.stderr.on 'data', (data) => @displayErrors(buffer, editor, data)
-    fmt.stdout.on 'data', (data) -> console.log 'language-go:fmt: ' + data
-    fmt.on 'close', (code) -> console.log fmtCmd + ' exited with code: ' + code if code isnt 0
+    fmt.stdout.on 'data', (data) -> console.log 'language-go: format – ' + data if data?
+    fmt.on 'close', (code) -> console.log fmtCmd + 'language-go: format – exited with code [' + code + ']' if code isnt 0
 
   displayErrors: (buffer, editor, data) ->
     pattern = /^(.*?:)(\d*?):(\d*?):\s(.*)$/img
