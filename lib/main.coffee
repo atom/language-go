@@ -3,7 +3,7 @@ Gofmt = require './gofmt'
 module.exports =
   configDefaults:
     formatOnSave: true
-    gofmtPath: "gofmt"
+    gofmtPath: "/usr/local/go/bin/gofmt"
     showErrorPanel: true
 
   activate: ->
