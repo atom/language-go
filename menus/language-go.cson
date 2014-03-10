@@ -1,0 +1,12 @@
+'menu': [
+    {
+        'label': 'Packages'
+        'submenu': [
+            'label': 'Go'
+            'submenu': [
+                {'label': 'Format File', 'command': 'golang:gofmt'},
+                {'label': 'Verify Syntax', 'command': 'golang:gobuild'}
+            ]
+        ]
+    }
+]
