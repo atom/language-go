@@ -7,6 +7,7 @@ module.exports =
     syntaxCheckOnSave: true
     gofmtPath: "/usr/local/go/bin/gofmt"
     goBinPath: "/usr/local/bin/go"
+    goPath: ""
     showErrorPanel: true
 
   activate: ->
