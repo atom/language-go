@@ -26,6 +26,8 @@ class Gobuild
     re = new RegExp(buffer.getBaseName()+"$");
     binCmd = atom.config.get('language-go.goBinPath')
     path = buffer.getPath().replace(re, "")
+    # TODO: check if the buffer base name ends in _test.go
+    # if it does, then use go test -c instead and cleanup after the run.
     args = ["build", "."]
     env = process.env
     env["GOPATH"] = goPath
@@ -37,7 +39,6 @@ class Gobuild
 
   displayErrors: (buffer, editor, data) ->
     output = data.toString().split("\n")
-    # TODO
     pattern = /^\.*\/*(.*?):(\d*?):\s(.*)$/img
     errors = []
     extract = (matchLine) ->
