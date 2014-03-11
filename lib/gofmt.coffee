@@ -31,7 +31,7 @@ class Gofmt
     fmt.on 'close', (code) -> console.log fmtCmd + 'language-go: format – exited with code [' + code + ']' if code isnt 0
 
   displayErrors: (buffer, editor, data) ->
-    pattern = /^(.*?:)(\d*?):(\d*?):\s(.*)$/img
+    pattern = /^(.*?):(\d*?):(\d*?):\s(.*)$/img
     errors = []
     extract = (matchLine) ->
       return unless matchLine?
