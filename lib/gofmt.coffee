@@ -34,7 +34,7 @@ class Gofmt
     pattern = /^(.*?:)(\d*?):(\d*?):\s(.*)$/img
     errors = []
     extract = (matchLine) ->
-      return if not matchLine?
+      return unless matchLine?
       error = [matchLine[2], matchLine[3], matchLine[4]]
       errors.push error
     loop
@@ -50,16 +50,16 @@ class Gofmt
 
   updateGutter: (errors) ->
     atom.workspaceView.eachEditorView (editorView) =>
-      return if not editorView.active
+      return unless editorView.active
       gutter = editorView.gutter
       gutter.removeClassFromAllLines('language-go-error')
       gutter.addClassToLine error[0] - 1, 'language-go-error' for error in errors
 
   updatePane: (errors) ->
     $('#language-go-status-pane').remove()
-    return if not errors?
+    return unless errors?
     return if errors.length <= 0
-    return if not atom.config.get('language-go.showErrorPanel')
+    return unless atom.config.get('language-go.showErrorPanel')
     html = $('<div id="language-go-status-pane" class="language-go-pane" style="height:">');
     append = (error) ->
       html.append('Line: ' + error[0] + ' Char: ' + error[1] + ' – ' + error[2])
