@@ -61,8 +61,7 @@ class Gofmt
     return if errors.length <= 0
     return unless atom.config.get('language-go.showErrorPanel')
     html = $('<div id="language-go-status-pane" class="language-go-pane" style="height:">');
-    append = (error) ->
+    for error in errors
       html.append('Line: ' + error[0] + ' Char: ' + error[1] + ' – ' + error[2])
       html.append('<br/>')
-    append error for error in errors
     atom.workspaceView.prependToBottom(html)
