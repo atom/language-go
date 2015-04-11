@@ -213,7 +213,10 @@
         'name': 'string.quoted.double.raw.backtick.go',
         'patterns': [
           {
-            'include': 'source.gotemplate'
+            'include': '#string_escaped_char'
+          }
+          {
+            'include': '#printf_verbs'
           }
         ]
       }
