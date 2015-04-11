@@ -80,35 +80,35 @@ describe 'Go grammar', ->
     expect(tokens[1].value).toEqual '\\\'',
     expect(tokens[1].scopes).toEqual ['source.go', 'string.quoted.single.go', 'constant.character.escape.go']
 
-it 'tokenizes Printf verbs in multiline strings', ->
-  # Taken from go/src/pkg/fmt/fmt_test.go
-  verbs = [
-    '%# x', '%-5s', '%5s', '%05s', '%.5s', '%10.1q', '%10v', '%-10v', '%.0d'
-    '%.d', '%+07.2f', '%0100d', '%0.100f', '%#064x', '%+.3F', '%-#20.8x',
-    '%[1]d', '%[2]*[1]d', '%[3]*.[2]*[1]f', '%[3]*.[2]f', '%3.[2]d', '%.[2]d'
-    '%-+[1]x', '%d', '%-d', '%+d', '%#d', '% d', '%0d', '%1.2d', '%-1.2d'
-    '%+1.2d', '%-+1.2d', '%*d', '%.*d', '%*.*d', '%0*d', '%-*d'
-  ]
+  it 'tokenizes Printf verbs in multiline strings', ->
+    # Taken from go/src/pkg/fmt/fmt_test.go
+    verbs = [
+      '%# x', '%-5s', '%5s', '%05s', '%.5s', '%10.1q', '%10v', '%-10v', '%.0d'
+      '%.d', '%+07.2f', '%0100d', '%0.100f', '%#064x', '%+.3F', '%-#20.8x',
+      '%[1]d', '%[2]*[1]d', '%[3]*.[2]*[1]f', '%[3]*.[2]f', '%3.[2]d', '%.[2]d'
+      '%-+[1]x', '%d', '%-d', '%+d', '%#d', '% d', '%0d', '%1.2d', '%-1.2d'
+      '%+1.2d', '%-+1.2d', '%*d', '%.*d', '%*.*d', '%0*d', '%-*d'
+    ]
 
-  for verb in verbs
-    {tokens} = grammar.tokenizeLine('`' + verb + '``')
-    expect(tokens[0].value).toEqual '`',
-    expect(tokens[0].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'punctuation.definition.string.begin.go']
-    expect(tokens[1].value).toEqual verb
-    expect(tokens[1].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'constant.escape.format-verb.go']
-    expect(tokens[2].value).toEqual '`',
-    expect(tokens[2].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'punctuation.definition.string.end.go']
+    for verb in verbs
+      {tokens} = grammar.tokenizeLine('`' + verb + '``')
+      expect(tokens[0].value).toEqual '`',
+      expect(tokens[0].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'punctuation.definition.string.begin.go']
+      expect(tokens[1].value).toEqual verb
+      expect(tokens[1].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'constant.escape.format-verb.go']
+      expect(tokens[2].value).toEqual '`',
+      expect(tokens[2].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'punctuation.definition.string.end.go']
 
-it 'tokenizes character escapes in multiline strings', ->
-  escapes = [
-    '\\a', '\\b', '\\f', '\\n', '\\r', '\\t', '\\v', '\\\\'
-    '\\000', '\\007', '\\377', '\\x07', '\\xff', '\\u12e4', '\\U00101234'
-  ]
+  it 'tokenizes character escapes in multiline strings', ->
+    escapes = [
+      '\\a', '\\b', '\\f', '\\n', '\\r', '\\t', '\\v', '\\\\'
+      '\\000', '\\007', '\\377', '\\x07', '\\xff', '\\u12e4', '\\U00101234'
+    ]
 
-  for escape in escapes
-    {tokens} = grammar.tokenizeLine('`' + escape + '`')
-    expect(tokens[1].value).toEqual escape
-    expect(tokens[1].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'constant.character.escape.go']
+    for escape in escapes
+      {tokens} = grammar.tokenizeLine('`' + escape + '`')
+      expect(tokens[1].value).toEqual escape
+      expect(tokens[1].scopes).toEqual ['source.go', 'string.quoted.double.raw.backtick.go', 'constant.character.escape.go']
 
 
   it 'tokenizes invalid whitespace around chan annotations', ->
