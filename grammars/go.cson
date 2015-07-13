@@ -104,6 +104,14 @@
     'match': '\\b((0x[0-9a-fA-F]+)|(0[0-7]+i?)|(\\d+([Ee]\\d+)?i?)|(\\d+[Ee][\-\+]\\d+i?))\\b'
   }
   {
+    'match': '[\\t ]*(type)\\s\\b(\\w+)\\b'
+    'captures':
+      '1':
+        'name': 'keyword.go'
+      '2':
+        'name': 'entity.name.type.go'
+  }
+  {
     'name': 'keyword.go'
     'match': '\\b(func|var|const|type|struct|interface|case|default)\\b'
   }

@@ -125,6 +125,13 @@ describe 'Go grammar', ->
       expect(tokens[1].value).toEqual invalid
       expect(tokens[1].scopes).toEqual ['source.go', 'invalid.illegal.go']
 
+  it 'tokenizes keyword "type" and the user defined type name', ->
+    {tokens} = grammar.tokenizeLine('type userdefined struct {')
+    expect(tokens[0].value).toEqual 'type'
+    expect(tokens[0].scopes).toEqual ['source.go', 'keyword.go']
+    expect(tokens[2].value).toEqual 'userdefined'
+    expect(tokens[2].scopes).toEqual ['source.go', 'entity.name.type.go']
+
   it 'tokenizes keywords', ->
     keywordLists =
       'keyword.go': ['func', 'var', 'const', 'type', 'struct', 'interface', 'case', 'default']
