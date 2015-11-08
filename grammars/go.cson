@@ -150,6 +150,20 @@
         'name': 'entity.name.type.go'
   }
   {
+    'include': '#types_init'
+  }
+  {
+         'comment': 'Make statements'
+         'match': '(?<=make\\()([^,\\)]*)'
+         'captures':
+             '1':
+                 'patterns': [
+                     {
+                         'include': '#types'
+                     }
+                 ]
+  }
+  {
     'comment': 'Shorthand variable declaration and assignments'
     'match': '[a-zA-Z_]\\w*(?:,\\s*[a-zA-Z_]\\w*)*(?=\\s*:=)'
     'captures':
@@ -488,3 +502,94 @@
             ]
       }
     ]
+  'types_init':
+    'patterns': [
+            {
+                'match': '(([\\w_][\\w\\d_]*\\.)?[\\w_][\\w\\d_]*)(?=\\{)'
+                'captures':
+                    '1':
+                        'patterns': [
+                                {
+                                    'include': '#types'
+                                }
+                            ]
+            }
+            {
+                'match': '(?<=map\\[)([^\\]]+)(\\])([^\\{]+)(?=\\{)'
+                'captures':
+                    '1':
+                        'patterns': [
+                            {
+                                'include': '#types'
+                            }
+                        ]
+                    '2':
+                        'patterns': [
+                            {
+                                'include': '#brackets'
+                            }
+                        ]
+                    '3':
+                        'patterns': [
+                            {
+                                'include': '#types'
+                            }
+                        ]
+            }
+    ]
+  'types':
+    'patterns': [
+            {
+                'include': '#brackets'
+            }
+            {
+                'include': '#storage_types'
+            }
+            {
+                'include': '#keywords'
+            }
+            {
+                'match': '\\b(chan)\\b(\\s+|\\s*<-\\s*|\\s*->\\s*)(.+)'
+                'captures':
+                    '1':
+                        'name': 'keyword.go'
+                    '3':
+                        'patterns': [
+                            {
+                                'include': '#types'
+                            }
+                        ]
+            }
+            {
+                'match': '\\b(map)\\b\\[([^\\]]+)\\]([^\\{]+){'
+                'captures':
+                    '1':
+                        'name': 'keyword.go'
+                    '2':
+                        'patterns': [
+                            {
+                                'include': '#types'
+                            }
+                        ]
+                    '3':
+                        'patterns': [
+                            {
+                                'include': '#types'
+                            }
+                        ]
+            }
+            {
+                'match': '(([\\w_][\\w\\d_]*)(\\.))?([\\w_][\\w\\d_]*)'
+                'captures':
+                    '2':
+                        'name': 'entity.name.package.go'
+                    '3':
+                        'patterns': [
+                            {
+                                'include': '#delimiters'
+                            }
+                        ]
+                    '4':
+                        'name': 'entity.name.type.go'
+            }
+        ]
