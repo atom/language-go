@@ -611,7 +611,7 @@ describe 'Go grammar', ->
           testVarDeclaration decl[1], 'foo'
           testOpAddress decl[3], '*'
           testOpBracket closing[0], ')'
-          
+
         it 'tokenizes all parts of variable initializations correctly', ->
           [kwd, decl, init, _, closing] = grammar.tokenizeLines 'var (\n\tm = map[string]int{\n\t\t"key": 10,\n\t}\n)'
           testVar kwd[0]
@@ -644,3 +644,86 @@ describe 'Go grammar', ->
           testVarAssignment tokens[8], 'z'
           testOpAssignment tokens[10], ':='
           testOpTermination tokens[16], ';'
+
+
+  describe 'testing type highlighting', ->
+    typeCheckers = [
+            {
+                strToCheck: 'a.A',
+                expected:
+                  [{value: 'a', scope: 'entity.name.package.go'},
+                  {value: '.', scope: 'punctuation.other.period.go'},
+                  {value: 'A', scope: 'entity.name.type.go'}]
+            },
+            {
+                strToCheck: 'A',
+                expected:
+                    [{value: 'A', scope: 'entity.name.type.go'}]
+            },
+            {
+                strToCheck: '[]A',
+                expected:
+                    [{value: '[', scope: 'punctuation.other.bracket.square.go'},
+                    {value: ']', scope: 'punctuation.other.bracket.square.go'},
+                    {value: 'A', scope: 'entity.name.type.go'}]
+            },
+            {
+                strToCheck: 'map[int]B',
+                expected:
+                    [{value: 'map', scope: 'keyword.map.go'},
+                    {value: '[', scope: 'punctuation.other.bracket.square.go'},
+                    {value: 'int', scope: 'storage.type.numeric.go'},
+                    {value: ']', scope: 'punctuation.other.bracket.square.go'},
+                    {value: 'B', scope: 'entity.name.type.go'}]
+            },
+            {
+                strToCheck: 'map[B]int',
+                expected:
+                    [{value: 'map', scope: 'keyword.map.go'},
+                    {value: '[', scope: 'punctuation.other.bracket.square.go'},
+                    {value: 'B', scope: 'entity.name.type.go'},
+                    {value: ']', scope: 'punctuation.other.bracket.square.go'},
+                    {value: 'int', scope: 'storage.type.numeric.go'}]
+            },
+        ]
+    testValueAndScope = (token, expected) ->
+      expect(token.value).toBe expected.value
+      expect(token.scopes).toEqual ['source.go', expected.scope]
+    verifyInit = (offset, expected, tokens) ->
+      for i in [0..expected.length-1]
+        console.log tokens[i], expected[i]
+        testValueAndScope tokens[i+offset], expected[i]
+    describe 'in initialization statements', ->
+      describe 'in initialize statements with curly braces ', ->
+        it 'tokenizes the package, type and puctuation', ->
+          for checker in typeCheckers
+            {tokens} = grammar.tokenizeLine checker.strToCheck+'{'
+            verifyInit 0, checker.expected,  tokens
+            testValueAndScope tokens[checker.expected.length], {value: '{', scope: 'punctuation.other.bracket.curly.go'}
+      describe 'in initialize statements with make', ->
+        toTest = typeCheckers.concat [{
+                    strToCheck: 'string',
+                    expected:
+                        [{value: 'string', scope: 'storage.type.string.go'}]
+                },
+                {
+                    strToCheck: 'chan <- A',
+                    expected:
+                        [{value: 'chan', scope: 'entity.name.type.go'},
+                        {value: '<-', scope: 'entity.name.type.go'},
+                        {value: 'A', scope: 'entity.name.type.go'}]
+                }]
+        it 'tokenizes the package, type and puctuation in simple make statemnt', ->
+          for checker in typeCheckers
+            {tokens} = grammar.tokenizeLine 'make(' + checker.strToCheck+ ')'
+            verifyInit 2, checker.expected,  tokens
+            testValueAndScope tokens[0], {value: 'make', scope: 'support.function.builtin.go'}
+            testValueAndScope tokens[1], {value: '(', scope: 'punctuation.other.bracket.round.go'}
+            testValueAndScope tokens[2 + checker.expected.length], {value: ')', scope: 'punctuation.other.bracket.round.go'}
+        it 'tokenizes the package, type and puctuation in a non-simple make statemnt', ->
+          for checker in typeCheckers
+            {tokens} = grammar.tokenizeLine 'make(' + checker.strToCheck+ ','
+            verifyInit 2, checker.expected,  tokens
+            testValueAndScope tokens[0], {value: 'make', scope: 'support.function.builtin.go'}
+            testValueAndScope tokens[1], {value: '(', scope: 'punctuation.other.bracket.round.go'}
+            testValueAndScope tokens[2 + checker.expected.length], {value: ',', scope: 'punctuation.other.comma.go'}
