@@ -112,7 +112,7 @@
     'body': "http.Serve(\"${1::8080}\", ${2:nil})"
   'goroutine anonymous function':
     'prefix': 'go'
-    'body': 'go func($1) {\n\t$2\n}($0)'
+    'body': 'go func($2) {\n\t$3\n}($1)'
   'goroutine function':
     'prefix': 'gf'
     'body': 'go ${1:func}($0)'
