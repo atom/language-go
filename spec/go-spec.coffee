@@ -572,6 +572,11 @@ describe 'Go grammar', ->
         testVarAssignment tokens[5], 'im'
         testOpAssignment tokens[7], '='
 
+      it 'does not treat words that have a trailing type as a type declaration', ->
+        {tokens} = grammar.tokenizeLine 'func test(envtype string)'
+        expect(tokens[4]).toEqual value: 'envtype ', scopes: ['source.go']
+        expect(tokens[5]).toEqual value: 'string', scopes: ['source.go', 'storage.type.string.go']
+
       it 'tokenizes with a placeholder', ->
         {tokens} = grammar.tokenizeLine 'var _, found = entries[name]'
         testVar tokens[0]
