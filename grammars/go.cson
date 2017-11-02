@@ -80,7 +80,7 @@
   }
   {
     'comment': 'Function declarations'
-    'match': '^(\\bfunc\\b)(?:\\s+(\\([^\\)]+\\)\\s+)?(\\w+)(?=\\())?'
+    'match': '^(\\bfunc\\b)(?:\\s+(\\([^\\)]+\\)\\s+)?(\\w+)\\s*(?=\\())?'
     'captures':
       '1':
         'name': 'keyword.function.go'
