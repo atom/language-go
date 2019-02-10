@@ -191,7 +191,7 @@ describe 'Go grammar', ->
         expect(tokens[0].scopes).toEqual ['source.go', scope]
 
   it 'tokenizes func regardless of the context', ->
-    funcKeyword = ['func f()', 'func (x) f()', 'func(x) f()', 'func']
+    funcKeyword = ['func f()', 'func (x) f()', 'func(x) f()', 'func', 'func f ()', 'func (x) f ()', 'func(x) f ()']
     for line in funcKeyword
       {tokens} = grammar.tokenizeLine line
       expect(tokens[0].value).toEqual 'func'
