@@ -293,11 +293,11 @@ describe 'Go grammar', ->
       'constant.numeric.floating-point.hexadecimal.go': ['0x1p-2', '0x2.p10', '0x1.Fp+0', '0X.8p-0', '0X_1FFFP-16']
       'constant.numeric.imaginary.decimal-integer.go': ['0i', '12i', '89i']
       'constant.numeric.imaginary.binary-integer.go': ['0b111i', '0B111i', '0b1_11i', '0B1_11i', '0b1_1_1i', '0B1_1_1i']
-      'constant.numeric.imaginary.octal-integer.go': ['0123i', '0o123i', '0O123i', '01_23i', '0o1_23i', '0O1_23i']
+      'constant.numeric.imaginary.octal-integer.go': ['0o123i', '0O123i', '0o1_23i', '0O1_23i']
       'constant.numeric.imaginary.hexadecimal-integer.go': ['0xabci', '0Xabci', '0xa_bci', '0Xa_bci', '0xa_b_ci', '0Xa_b_ci']
       'constant.numeric.imaginary.decimal-floating-point.go': ['0.i', '2.71828i', '1.e+0i', '6.67428e-11i', '1E6i', '.25i', '.12345E+5i', '00.i', '02.71828i', '01.e+0i', '06.67428e-11i', '01E6i', '00.25i', '00.12345E+5i']
       'constant.numeric.imaginary.hexadecimal-floating-point.go': ['0x1p-2i', '0x1p-2i', '0x2.p10i', '0x1.Fp+0i', '0X.8p-0i', '0X_1FFFP-16i']
-      'constant.numeric.imaginary.backwards-compatibility.go': ['089i', '0089i', '0_0_89i', '0_0_8_9i', '012i', '0012i', '0_0_12i', '0_0_1_2i', '000i', '000123i']
+      'constant.numeric.imaginary.backwards-compatibility.go': ['0123i', '01_23i', '0123i', '00123i', '0_0_123i', '0_0_1_23i', '000i', '089i', '0089i', '0_0_89i', '0_0_8_9i']
 
     for scope, nums of numbers
       for num in nums
