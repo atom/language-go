@@ -285,11 +285,19 @@ describe 'Go grammar', ->
 
   it 'tokenizes numerics', ->
     numbers =
-      'constant.numeric.integer.go': ['42', '0600', '0xBadFace', '170141183460469231731687303715884105727', '1E6', '0i', '011i', '1E6i']
-      'constant.numeric.floating-point.go': [
-        '0.', '72.40', '072.40', '2.71828', '1.e+0', '6.67428e-11', '.25', '.12345E+5',
-        '0.i', '2.71828i', '1.e+0i', '6.67428e-11i', '.25i', '.12345E+5i'
-      ]
+      'constant.numeric.integer.decimal.go': ['10', '4_2', '170141183460469231731687303715884105727', '170_141183_460469_231731_687303_715884_105727']
+      'constant.numeric.integer.binary.go': ['0b1011', '0b1011', '0b1011_1011', '0B10_11_10_11']
+      'constant.numeric.integer.octal.go': ['0600', '0_600', '0o600', '0O600']
+      'constant.numeric.integer.hexadecimal.go': ['0xBadFace', '0xBad_Face', '0x_67_7a_2f_cc_40_c6', '0XBadFace', '0XBad_Face', '0X_67_7a_2f_cc_40_c6']
+      'constant.numeric.floating-point.decimal.go': ['0.', '72.40', '072.40', '2.71828', '1.e+0', '6.67428e-11', '1E6', '1.25', '.25', '.12345E+5', '.12345E-5', '.12345E5', '1_5.', '1_5.123', '0.15e+0_2']
+      'constant.numeric.floating-point.hexadecimal.go': ['0x1p-2', '0x2.p10', '0x1.Fp+0', '0X.8p-0', '0X_1FFFP-16']
+      'constant.numeric.imaginary.decimal-integer.go': ['0i', '12i', '89i']
+      'constant.numeric.imaginary.binary-integer.go': ['0b111i', '0B111i', '0b1_11i', '0B1_11i', '0b1_1_1i', '0B1_1_1i']
+      'constant.numeric.imaginary.octal-integer.go': ['0123i', '0o123i', '0O123i', '01_23i', '0o1_23i', '0O1_23i']
+      'constant.numeric.imaginary.hexadecimal-integer.go': ['0xabci', '0Xabci', '0xa_bci', '0Xa_bci', '0xa_b_ci', '0Xa_b_ci']
+      'constant.numeric.imaginary.decimal-floating-point.go': ['0.i', '2.71828i', '1.e+0i', '6.67428e-11i', '1E6i', '.25i', '.12345E+5i', '00.i', '02.71828i', '01.e+0i', '06.67428e-11i', '01E6i', '00.25i', '00.12345E+5i']
+      'constant.numeric.imaginary.hexadecimal-floating-point.go': ['0x1p-2i', '0x1p-2i', '0x2.p10i', '0x1.Fp+0i', '0X.8p-0i', '0X_1FFFP-16i']
+      'constant.numeric.imaginary.backwards-compatibility.go': ['089i', '0089i', '0_0_89i', '0_0_8_9i', '012i', '0012i', '0_0_12i', '0_0_1_2i', '000i', '000123i']
 
     for scope, nums of numbers
       for num in nums
@@ -355,10 +363,10 @@ describe 'Go grammar', ->
 
   it 'does not treat values/variables attached to comparion operators as extensions of the operator', ->
     {tokens} = grammar.tokenizeLine '2<3.0 && 12>bar'
-    expect(tokens[0]).toEqual value: '2', scopes: ['source.go', 'constant.numeric.integer.go']
+    expect(tokens[0]).toEqual value: '2', scopes: ['source.go', 'constant.numeric.integer.decimal.go']
     expect(tokens[1]).toEqual value: '<', scopes: ['source.go', 'keyword.operator.comparison.go']
-    expect(tokens[2]).toEqual value: '3.0', scopes: ['source.go', 'constant.numeric.floating-point.go']
-    expect(tokens[6]).toEqual value: '12', scopes: ['source.go', 'constant.numeric.integer.go']
+    expect(tokens[2]).toEqual value: '3.0', scopes: ['source.go', 'constant.numeric.floating-point.decimal.go']
+    expect(tokens[6]).toEqual value: '12', scopes: ['source.go', 'constant.numeric.integer.decimal.go']
     expect(tokens[7]).toEqual value: '>', scopes: ['source.go', 'keyword.operator.comparison.go']
     expect(tokens[8]).toEqual value: 'bar', scopes: ['source.go']
 
@@ -522,7 +530,7 @@ describe 'Go grammar', ->
 
     testNum = (token, value) ->
       expect(token.value).toBe value
-      expect(token.scopes).toEqual ['source.go', 'constant.numeric.integer.go']
+      expect(token.scopes).toEqual ['source.go', 'constant.numeric.integer.decimal.go']
 
     testString = (token, value) ->
       expect(token.value).toBe value
@@ -594,7 +602,7 @@ describe 'Go grammar', ->
         testVar tokens[0]
         testVarDeclaration tokens[2], 's'
         expect(tokens[4]).toEqual value: '[', scopes: ['source.go', 'punctuation.definition.bracket.square.go']
-        expect(tokens[5]).toEqual value: '4', scopes: ['source.go', 'constant.numeric.integer.go']
+        expect(tokens[5]).toEqual value: '4', scopes: ['source.go', 'constant.numeric.integer.decimal.go']
         expect(tokens[6]).toEqual value: ']', scopes: ['source.go', 'punctuation.definition.bracket.square.go']
         testStringType tokens[7], 'string'
 

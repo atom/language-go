@@ -124,14 +124,69 @@
         ]
   }
   {
-    'comment': 'Floating-point literals'
-    'match': '(\\.\\d+([Ee][\-\+]\\d+)?i?)\\b|\\b\\d+\\.\\d*(([Ee][\-\+]\\d+)?i?\\b)?'
-    'name': 'constant.numeric.floating-point.go'
+    'comment': 'Decimal literals'
+    'match': '(?<=[^_.\\da-zA-Z])(0|[1-9](_?\\d(_?\\d)*)?)(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.integer.decimal.go'
   }
   {
-    'comment': 'Integers'
-    'match': '\\b((0x[0-9a-fA-F]+)|(0[0-7]+i?)|(\\d+([Ee]\\d+)?i?)|(\\d+[Ee][\-\+]\\d+i?))\\b'
-    'name': 'constant.numeric.integer.go'
+    'comment': 'Binary literals'
+    'match': '(?<=[^_.\\da-zA-Z])0[bB]_?[01](_?[01])*(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.integer.binary.go'
+  }
+  {
+    'comment': 'Octal literals'
+    'match': '(?<=[^_.\\da-zA-Z])0[oO]?_?[0-7](_?[0-7])*(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.integer.octal.go'
+  }
+  {
+    'comment': 'Hexadecimal literals'
+    'match': '(?<=[^_.\\da-zA-Z])0[xX]_?[\\da-fA-F](_?[\\da-fA-F])*(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.integer.hexadecimal.go'
+  }
+  {
+    'comment': 'Decimal floating-point literals'
+    'match': '(?<=[^_.\\da-zA-Z])(\\d(_?\\d)*\\.(\\d(_?\\d)*)?([eE][+-]?\\d(_?\\d)*)?|\\d(_?\\d)*[eE][+-]?\\d(_?\\d)*|\\.\\d(_?\\d)*([eE][+-]?\\d(_?\\d)*)?)(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.floating-point.decimal.go'
+  }
+  {
+    'comment': 'Hexadecimal floating-point literals'
+    'match': '(?<=[^_.\\da-zA-Z])(0[xX](_?[\\da-fA-F](_?[\\da-fA-F])*\\.([\\da-fA-F](_?[\\da-fA-F])*)?|_?[\\da-fA-F](_?[\\da-fA-F])*|\\.[\\da-fA-F](_?[\\da-fA-F])*)[pP][+-]?\\d(_?\\d)*)(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.floating-point.hexadecimal.go'
+  }
+  {
+    'comment': 'Imaginary literals (with decimal integer literal)'
+    'match': '(?<=[^_.\\da-zA-Z])(0|[1-9](_?\\d(_?\\d)*)?)i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.decimal-integer.go'
+  }
+  {
+    'comment': 'Imaginary literals (with binary integer literal)'
+    'match': '(?<=[^_.\\da-zA-Z])0[bB]_?[01](_?[01])*i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.binary-integer.go'
+  }
+  {
+    'comment': 'Imaginary literals (with octal integer literal)'
+    'match': '(?<=[^_.\\da-zA-Z])0[oO]_?[0-7](_?[0-7])*i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.octal-integer.go'
+  }
+  {
+    'comment': 'Imaginary literals (with hexadecimal integer literal)'
+    'match': '(?<=[^_.\\da-zA-Z])0[xX]_?[\\da-fA-F](_?[\\da-fA-F])*i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.hexadecimal-integer.go'
+  }
+  {
+    'comment': 'Imaginary literals (with decimal floating-point literal)'
+    'match': '(?<=[^_.\\da-zA-Z])(\\d(_?\\d)*\\.(\\d(_?\\d)*)?([eE][+-]?\\d(_?\\d)*)?|\\d(_?\\d)*[eE][+-]?\\d(_?\\d)*|\\.\\d(_?\\d)*([eE][+-]?\\d(_?\\d)*)?)i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.decimal-floating-point.go'
+  }
+  {
+    'comment': 'Imaginary literals (with hexadecimal floating-point literal)'
+    'match': '(?<=[^_.\\da-zA-Z])(0[xX](_?[\\da-fA-F](_?[\\da-fA-F])*\\.([\\da-fA-F](_?[\\da-fA-F])*)?|_?[\\da-fA-F](_?[\\da-fA-F])*|\\.[\\da-fA-F](_?[\\da-fA-F])*)[pP][+-]?\\d(_?\\d)*)i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.hexadecimal-floating-point.go'
+  }
+  {
+    'comment': 'Imaginary literals (for backwards compatibility)'
+    'match': '(?<=[^_.\\da-zA-Z])0+(_?\\d)*i(?=[^_.\\da-zA-Z])'
+    'name': 'constant.numeric.imaginary.backwards-compatibility.go'
   }
   {
     'comment': 'Language constants'
