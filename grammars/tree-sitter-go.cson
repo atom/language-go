@@ -43,88 +43,252 @@ folds: [
 scopes:
   'source_file': 'source.go'
 
+  # Keyword
+  '"if"': 'keyword.control.condition'
+  '"else"': 'keyword.control.condition'
+  '"switch"': 'keyword.control.condition'
+  '"select"': 'keyword.control.condition'
+  '"case"': 'keyword.control.condition'
+  '"fallthrough"': 'keyword.control.condition'
+  '"default"': 'keyword.control.condition'
+  '"for"': 'keyword.control.loop'
+  '"range"': 'keyword.control.loop'
+  '"break"': 'keyword.control.jump'
+  '"return"': 'keyword.control.jump'
+  '"continue"': 'keyword.control.jump'
+  '"goto"': 'keyword.control.jump'
+  '"defer"': 'keyword.control.jump'
+  '"go"': 'keyword.control.jump'
+  '"package"': 'keyword.control.directive'
+  '"import"': 'keyword.control.package'
+
+  '"+"': 'keyword.operator.arithmetic.symbolic'
+  '"-"': 'keyword.operator.arithmetic.symbolic'
+  'binary_expression > "*"': 'keyword.operator.arithmetic.symbolic'
+  '"/"': 'keyword.operator.arithmetic.symbolic'
+  '"%"': 'keyword.operator.arithmetic.symbolic'
+  '"++"': 'keyword.operator.arithmetic.symbolic'
+  '"--"': 'keyword.operator.arithmetic.symbolic'
+
+  'binary_expression > "&"': 'keyword.operator.bitwise.symbolic'
+  '"|"': 'keyword.operator.bitwise.symbolic'
+  '"^"': 'keyword.operator.bitwise.symbolic'
+  '"&^"': 'keyword.operator.bitwise.symbolic'
+  '"<<"': 'keyword.operator.bitwise.shift.symbolic'
+  '">>"': 'keyword.operator.bitwise.shift.symbolic'
+
+  '"="': 'keyword.operator.assignment.symbolic'
+  '":="': 'keyword.operator.assignment.symbolic'
+  '"+="': 'keyword.operator.assignment.compound.symbolic'
+  '"-="': 'keyword.operator.assignment.compound.symbolic'
+  '"*="': 'keyword.operator.assignment.compound.symbolic'
+  '"/="': 'keyword.operator.assignment.compound.symbolic'
+  '"%="': 'keyword.operator.assignment.compound.symbolic'
+  '"&="': 'keyword.operator.assignment.compound.symbolic'
+  '"|="': 'keyword.operator.assignment.compound.symbolic'
+  '"^="': 'keyword.operator.assignment.compound.symbolic'
+  '"<<="': 'keyword.operator.assignment.compound.symbolic'
+  '">>="': 'keyword.operator.assignment.compound.symbolic'
+
+  '"=="': 'keyword.operator.comparison.symbolic'
+  '"!="': 'keyword.operator.comparison.symbolic'
+  '"<"': 'keyword.operator.comparison.symbolic'
+  '">"': 'keyword.operator.comparison.symbolic'
+  '"<="': 'keyword.operator.comparison.symbolic'
+  '">="': 'keyword.operator.comparison.symbolic'
+
+  '"!"': 'keyword.operator.logical.symbolic'
+  '"&&"': 'keyword.operator.logical.symbolic'
+  '"||"': 'keyword.operator.logical.symbolic'
+
+  '"&"': 'keyword.operator.pointer.reference.symbolic'
+  '"*"': 'keyword.operator.pointer.dereference.symbolic'
+
+  '"<-"': 'keyword.operator.channel.symbolic'
+
+  '"var"': 'keyword.storage.declaration'
+  '"const"': 'keyword.storage.declaration'
+  '"map"': 'keyword.storage.declaration'
+  '"chan"': 'keyword.storage.declaration'
+  '"func"': 'keyword.storage.declaration'
+  '"type"': 'keyword.storage.declaration'
+  '"struct"': 'keyword.storage.declaration'
+  '"interface"': 'keyword.storage.declaration'
+
+  # Entity
+  'type_identifier': [
+    {
+      match: '^(bool|byte|complex128|complex64|error|float32|float64|int|int16|int32|int64|int8|rune|string|uint|uint16|uint32|uint64|uint8|uintptr)$',
+      scopes: 'entity.type.fundamental.support'
+    },
+    'entity.type'
+  ]
+
+  'package_identifier': 'entity.package'
+
+  'label_name': 'entity.label'
+
+  'identifier': [
+    {
+      exact: 'iota',
+      scopes: 'entity.variable.support.iota'
+    },
+    'entity.variable'
+  ]
+
+  'parameter_declaration > identifier': [
+    {
+      exact: 'iota',
+      scopes: 'entity.variable.support.parameter.iota'
+    },
+    'entity.variable.parameter'
+  ]
+
+  'field_identifier': 'entity.variable.member'
+
+  'call_expression > identifier': [
+    {
+      match: '^(append|cap|close|complex|copy|delete|imag|len|make|new|panic|print|println|real|recover)$',
+      scopes: 'entity.function.support.call'
+    },
+    {
+      match: '^(bool|byte|complex128|complex64|error|float32|float64|int|int16|int32|int64|int8|rune|string|uint|uint16|uint32|uint64|uint8|uintptr)$',
+      scopes: 'entity.type.fundamental.cast.support.call'
+    },
+    'entity.function.call'
+  ]
+
+  'call_expression > selector_expression > field_identifier': 'entity.function.call'
+
+  'function_declaration > identifier': 'entity.function.definition'
+  'method_declaration > field_identifier': 'entity.function.method.definition'
+  'type_declaration > type_spec > type_identifier': 'entity.type.definition'
+
+  # String
+  'interpreted_string_literal': 'string.quoted'
+  'raw_string_literal': 'string.quoted'
+
+  # Constant
+  'escape_sequence': [
+    {
+      match: '^\\\\[uUxftvnrab0-9]',
+      scopes: 'constant.character.escape.code'
+    },
+    'constant.character.escape'
+  ]
+
+  'rune_literal': 'constant.character.rune'
+
+  'int_literal': 'constant.numeric.integer'
+  'float_literal': 'constant.numeric.decimal'
+  'imaginary_literal': 'constant.numeric.complex'
+
+  'nil': 'constant.language.null'
+  'true': 'constant.language.boolean.true'
+  'false': 'constant.language.boolean.false'
+
+  # Comment
   'comment': 'comment.block'
 
-  '"var"': 'keyword.import'
-  '"type"': 'keyword.type'
-  '"func"': 'keyword.function'
-  '"const"': 'keyword.const'
-  '"struct"': 'keyword.struct'
-  '"interface"': 'keyword.interface'
-  '"import"': 'keyword.import'
-  '"package"': 'keyword.package'
-  '"map"': 'keyword.map'
-  '"chan"': 'keyword.chan'
+  # Punctuation
+  '"."': 'punctuation.accessor.member'
+  '","': 'punctuation.separator'
+  '";"': 'punctuation.terminator'
+  '":"': 'punctuation.delimiter'
+  '"("': 'punctuation.delimiter'
+  '")"': 'punctuation.delimiter'
+  '"{"': 'punctuation.delimiter'
+  '"}"': 'punctuation.delimiter'
+  '"["': 'punctuation.definition'
+  '"]"': 'punctuation.definition'
+  '"\\""': 'punctuation.definition.string'
 
-  'type_identifier': 'support.storage.type'
-  'field_identifier': 'variable.other.object.property'
-  'package_identifier': 'entity.name.package'
+  'variadic_parameter_declaration > "..."': 'punctuation.operation.variadic.pack'
+  'variadic_argument > "..."': 'punctuation.operation.variadic.unpack'
 
-  '"if"': 'keyword.control'
-  '"for"': 'keyword.control'
-  '"else"': 'keyword.control'
-  '"case"': 'keyword.control'
-  '"break"': 'keyword.control'
-  '"switch"': 'keyword.control'
-  '"select"': 'keyword.control'
-  '"return"': 'keyword.control'
-  '"default"': 'keyword.control'
-  '"continue"': 'keyword.control'
-  '"goto"': 'keyword.control'
-  '"fallthrough"': 'keyword.control'
-  '"defer"': 'keyword.control'
-  '"range"': 'keyword.control'
-  '"go"': 'keyword.control'
+  'implicit_length_array_type > "..."': 'punctuation.definition.collection.array'
 
-  'interpreted_string_literal': 'string.quoted.double'
-  'raw_string_literal': 'string.quoted.double'
-  'escape_sequence': 'constant.character.escape'
-  'rune_literal': 'constant.other.rune'
-  'int_literal': 'constant.numeric.integer'
-  'float_literal': 'constant.numeric.float'
-  'imaginary_literal': 'constant.numeric.integer'
-  'nil': 'constant.language.nil'
-  'false': 'constant.language.false'
-  'true': 'constant.language.true'
+  'slice_expression > ":"': 'punctuation.delimiter.slice'
+  'keyed_element > ":"': 'punctuation.association.pair'
 
-  'call_expression > identifier': 'entity.name.function'
-  'function_declaration > identifier': 'entity.name.function'
-  'method_declaration > field_identifier': 'entity.name.function'
-  'call_expression > selector_expression > field_identifier': 'entity.name.function'
+  'parenthesized_expression > "("': 'punctuation.delimiter.expression'
+  'parenthesized_expression > ")"': 'punctuation.delimiter.expression'
 
-  '"+"': 'keyword.operator'
-  '"-"': 'keyword.operator'
-  '"*"': 'keyword.operator'
-  '"/"': 'keyword.operator'
-  '"%"': 'keyword.operator'
-  '"++"': 'keyword.operator'
-  '"--"': 'keyword.operator'
-  '"=="': 'keyword.operator'
-  '"!="': 'keyword.operator'
-  '">"': 'keyword.operator'
-  '"<"': 'keyword.operator'
-  '">="': 'keyword.operator'
-  '"<="': 'keyword.operator'
-  '"!"': 'keyword.operator'
-  '"|"': 'keyword.operator'
-  '"^"': 'keyword.operator'
-  '"<<"': 'keyword.operator'
-  '">>"': 'keyword.operator'
-  '"="': 'keyword.operator'
-  '"+="': 'keyword.operator'
-  '"-="': 'keyword.operator'
-  '"*="': 'keyword.operator'
-  '"/="': 'keyword.operator'
-  '"%="': 'keyword.operator'
-  '"<<="': 'keyword.operator'
-  '">>="': 'keyword.operator'
-  '"&="': 'keyword.operator'
-  '"^="': 'keyword.operator'
-  '"|="': 'keyword.operator'
-  '":="': 'keyword.operator'
-  '"&"': 'keyword.operator'
-  '"*"': 'keyword.operator'
-  '"&&"': 'keyword.operator'
-  '"||"': 'keyword.operator'
-  '"..."': 'keyword.operator'
-  '"<-"': 'keyword.operator'
+  'parameter_list > "("': 'punctuation.delimiter.parameters'
+  'parameter_list > ")"': 'punctuation.delimiter.parameters'
+
+  'argument_list > "("': 'punctuation.delimiter.arguments'
+  'argument_list > ")"': 'punctuation.delimiter.arguments'
+  'special_argument_list > "("': 'punctuation.delimiter.arguments'
+  'special_argument_list > ")"': 'punctuation.delimiter.arguments'
+  'type_switch_statement > "("': 'punctuation.delimiter.arguments'
+  'type_switch_statement > ")"': 'punctuation.delimiter.arguments'
+  'type_assertion_expression > "("': 'punctuation.delimiter.arguments'
+  'type_assertion_expression > ")"': 'punctuation.delimiter.arguments'
+  'type_conversion_expression > "("': 'punctuation.delimiter.arguments'
+  'type_conversion_expression > ")"': 'punctuation.delimiter.arguments'
+
+  'import_spec_list > "("': 'punctuation.delimiter.package'
+  'import_spec_list > ")"': 'punctuation.delimiter.package'
+
+  'const_declaration > "("': 'punctuation.delimiter.variable'
+  'const_declaration > ")"': 'punctuation.delimiter.variable'
+  'var_declaration > "("': 'punctuation.delimiter.variable'
+  'var_declaration > ")"': 'punctuation.delimiter.variable'
+
+  'type_declaration > "("': 'punctuation.delimiter.type'
+  'type_declaration > ")"': 'punctuation.delimiter.type'
+  'parenthesized_type > "("': 'punctuation.delimiter.type'
+  'parenthesized_type > ")"': 'punctuation.delimiter.type'
+
+  'literal_value > "{"': 'punctuation.definition.collection'
+  'literal_value > "}"': 'punctuation.definition.collection'
+
+  'field_declaration_list > "{"': 'punctuation.delimiter.body.structure'
+  'field_declaration_list > "}"': 'punctuation.delimiter.body.structure'
+
+  'method_spec_list > "{"': 'punctuation.delimiter.body.class.abstract'
+  'method_spec_list > "}"': 'punctuation.delimiter.body.class.abstract'
+
+  'block > "{"': 'punctuation.delimiter.statement'
+  'block > "}"': 'punctuation.delimiter.statement'
+  'select_statement > "{"': 'punctuation.delimiter.statement'
+  'select_statement > "}"': 'punctuation.delimiter.statement'
+  'type_switch_statement > "{"': 'punctuation.delimiter.statement'
+  'type_switch_statement > "}"': 'punctuation.delimiter.statement'
+  'expression_switch_statement > "{"': 'punctuation.delimiter.statement'
+  'expression_switch_statement > "}"': 'punctuation.delimiter.statement'
+
+  'func_literal > block > "{"': 'punctuation.delimiter.body.function'
+  'func_literal > block > "}"': 'punctuation.delimiter.body.function'
+  'function_declaration > block > "{"': 'punctuation.delimiter.body.function'
+  'function_declaration > block > "}"': 'punctuation.delimiter.body.function'
+  'method_declaration > block > "{"': 'punctuation.delimiter.body.function.method'
+  'method_declaration > block > "}"': 'punctuation.delimiter.body.function.method'
+
+  'map_type > "["': 'punctuation.definition.collection.map'
+  'map_type > "]"': 'punctuation.definition.collection.map'
+  'slice_type > "["': 'punctuation.definition.collection.slice'
+  'slice_type > "]"': 'punctuation.definition.collection.slice'
+  'array_type > "["': 'punctuation.definition.collection.array'
+  'array_type > "]"': 'punctuation.definition.collection.array'
+  'implicit_length_array_type > "["': 'punctuation.definition.collection.array'
+  'implicit_length_array_type > "]"': 'punctuation.definition.collection.array'
+
+  'index_expression > "["': 'punctuation.delimiter.subscript.index'
+  'index_expression > "]"': 'punctuation.delimiter.subscript.index'
+  'slice_expression > "["': 'punctuation.delimiter.subscript.slice'
+  'slice_expression > "]"': 'punctuation.delimiter.subscript.slice'
+
+  'ERROR > "."': 'punctuation.accessor.member.invalid.illegal'
+  'ERROR > ","': 'punctuation.separator.invalid.illegal'
+  'ERROR > ";"': 'punctuation.terminator.invalid.illegal'
+  'ERROR > ":"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "("': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > ")"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "{"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "}"': 'punctuation.delimiter.invalid.illegal'
+  'ERROR > "["': 'punctuation.definition.invalid.illegal'
+  'ERROR > "]"': 'punctuation.definition.invalid.illegal'
+  'ERROR > "..."': 'punctuation.operation.variadic.invalid.illegal'
+  'ERROR > "\\""': 'punctuation.definition.string.invalid.illegal'
